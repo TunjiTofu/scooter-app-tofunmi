@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\Scooter;
-use App\Models\Trip;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
 

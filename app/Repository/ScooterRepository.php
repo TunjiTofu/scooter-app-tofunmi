@@ -17,34 +17,18 @@ class ScooterRepository implements ScooterRepositoryInterface
         $this->trip = $trip;
     }
     
-    public function locateScooterForClient(ClientScooterRequest $request)
+    public function locateScooter(ClientScooterRequest $request)
     {
-        //return Scooter::all();
-        // dd($request);
         try {
             $query = Scooter::query()
             ->withinDistanceTo('location', new Point(lat: $request->clientCurrentLat, lng: $request->clientCurrentLng), $request->radius)
-            ->orderBy('status')
+            ->where('status', 0)
             ->get();
     
-            return $this->success("List of Scooters ".$request->radius. "KM from your Location" , $query, 200);
-            // dd($query);
-        } catch (\Throwable $th) {
-            return $this->error($th->getMessage(), 403);
+            return $this->buildSuccessResponse("List of Scooters ".$request->radius. "KM from your Location" , $query, 200);
+        } catch (\Throwable $exception) {
+            return $this->buildErrorResponse($exception->getMessage(), 403);
         }
-
-       
-
-    }
-
-    public function startScooterTrip($uuid)
-    { 
-        return Scooter::find($uuid); 
-    }
-
-    public function endScooterTrip($uuid)
-    {
-        return Scooter::find($uuid);
     }
 }
 

@@ -42,11 +42,9 @@ class StartTrip extends Command
         ]);
         if ($response->failed()) {
             $errorMsg = ["message" => 'Error Ending Trip'];
-            // dd($errorMsg);
             info($errorMsg);
         }
         $postResponse = $response->json();
-        dd($postResponse);
         info($postResponse);
     }
 }

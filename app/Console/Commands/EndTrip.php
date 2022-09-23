@@ -45,10 +45,9 @@ class EndTrip extends Command
             info($errorMsg);
         }
         $postResponse = $response->json();
-        // dd($postResponse);
         info($postResponse);
-
-        sleep(5);
+        
+        sleep(rand(2,5));
         $readyMsg = ["message" => 'Scooter is ready for next available pick up'];
         info($readyMsg);
     }

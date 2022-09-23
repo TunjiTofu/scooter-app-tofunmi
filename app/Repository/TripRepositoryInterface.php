@@ -8,10 +8,10 @@ use App\Http\Requests\StoreTripRequest;
 interface TripRepositoryInterface{
     // public function getAllTrips();
 
-    public function startScooterTrip(StartTripRequest $request, int $id=null);
+    public function startTrip(StartTripRequest $request, int $id=null);
     // public function startScooterTrip(array $data);
-    public function stopScooterTrip(StopTripRequest $request);
-    public function updateScooterTrip(int $scooter_id);
+    public function stopTrip(StopTripRequest $request);
+    public function updateTrip(int $scooter_id);
 }
 
 ?> 

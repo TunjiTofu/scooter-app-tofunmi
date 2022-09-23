@@ -35,7 +35,6 @@ class UpdateTrip extends Command
         $response = Http::withHeaders(['API_KEY' => $key])->put('http://localhost/api/v1/trip/update/' . $scooterId);
         if ($response->failed()) {
             $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
-            // dd($errorMsg);
             info($errorMsg);
         }
         $postResponse = $response->json();
