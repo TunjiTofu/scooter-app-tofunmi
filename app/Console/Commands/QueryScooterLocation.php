@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Scooter;
+use App\Traits\ResponseAPI;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class QueryScooterLocation extends Command
 {
@@ -12,7 +14,7 @@ class QueryScooterLocation extends Command
      *
      * @var string
      */
-    protected $signature = 'scooter:location';
+    protected $signature = 'scooter:location {radius} {clientCurrentLat} {clientCurrentLng}';
 
     /**
      * The console command description.
@@ -28,43 +30,20 @@ class QueryScooterLocation extends Command
      */
     public function handle()
     {
-        // $lat1 = $this->ask('Enter Latitude of Point A');
-        // $long1 = $this->ask('Enter Longitude of Point A');
-        // $lat2 = $this->ask('Enter Latitude of Point B');
-        // $long2 = $this->ask('Enter Longitude of Point B');
-        // $coord2 = $this->ask('Enter 2nd pair of coordinates');
-        // $points = $this->argument('point');
+        $radius = $this->argument(key: 'radius');
+        $clientCurrentLat = $this->argument(key: 'clientCurrentLat');
+        $clientCurrentLng = $this->argument(key: 'clientCurrentLng');
 
-        // for ($i=0; $i < 4; $i++) { 
-        //     $this->info(string: $points[$i] );
-        // } 
-        // $query = Scooter::where('status', '=', 0)->get();
-        $headers = ['id', 'Default Location'];
-        $query = Scooter::select("id", "defaultLocation")
-            ->where(
-                "status",
-                "=",
-                0
-            )->get()->toArray();
-
-
-        $this->info(string: ' Available Scooters and their Location');
-
-        $this->table($headers, $query);
-        // print_r($query);
-
-
-
-        //         $array = ['1'=>'100','2'=>'500','3'=>'1000','4'=>'2000'];
-        // $n = 361;
-        // rsort($array);
-
-        // Foreach($array as $key => $val){
-        //     If($n > $val){
-        //         $res = $val;
-        //         Break;
-        //     }
-        // }
-
+        $response = Http::post('http://localhost/api/v1/client/scooters', [
+            "radius" =>$radius,
+            "clientCurrentLat" => $clientCurrentLat,
+            "clientCurrentLng" => $clientCurrentLng
+        ]);
+        if($response->failed()){
+            $errorMsg = ["message"=> 'Error Locating Scooters'];
+            dd($errorMsg);
+        }
+        $postResponse = $response->json();
+        dd($postResponse);
     }
 }

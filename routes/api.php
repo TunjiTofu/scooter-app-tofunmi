@@ -23,12 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  
 
 // Route::apiResource('scooter', ScooterController::class);
-// Route::post('/scooter-add', [ScooterController::class, 'add']);
+Route::get('/scooter', [ScooterController::class, 'index']);
 Route::post('/client/scooters', [ScooterController::class, 'clientLocateScooters']); 
 
 Route::post('/trip/start', [TripController::class, 'startTrip']);
-Route::put('/trip/end/{id}', [TripController::class, 'endTrip']);
-Route::put('/trip/update/{id}', [TripController::class, 'updateTrip']);
+Route::post('/trip/end/{id}', [TripController::class, 'endTrip']);
+Route::get('/trip/update/{id}', [TripController::class, 'updateTrip']);
 
 Route::get('/scooter-create', function(){
     Artisan::call('scooters:create --count=2');
