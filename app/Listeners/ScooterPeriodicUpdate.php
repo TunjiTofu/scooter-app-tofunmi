@@ -26,6 +26,6 @@ class ScooterPeriodicUpdate
      */
     public function handle($event)
     {
-        echo " Location for Scooter with id:  . $event->scooter. has been updated";
+        // echo " Location for Scooter with id:  . $event->scooter. has been updated";
     }
 }

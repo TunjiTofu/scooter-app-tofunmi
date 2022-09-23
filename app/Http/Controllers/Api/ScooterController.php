@@ -30,6 +30,7 @@ class ScooterController extends Controller
      */
     public function index()
     {
+        return "Hi";
         // $scooters = $this->scooter->getAllScooters();
         // return response()->json([
         //     'scooters' => $scooters

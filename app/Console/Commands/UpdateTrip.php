@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Trip;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class UpdateTrip extends Command
 {
@@ -29,23 +30,13 @@ class UpdateTrip extends Command
     public function handle()
     {
         $scooterId = $this->argument(key: 'scooterId');
-        $query = Trip::select("currentLocation")
-            ->where(
-                "scooter_id",
-                "=",
-                $scooterId
-            )->first()->toArray();
 
-        if($query){
-            $currentLong = $query['currentLocation'][0]+0.11; //every 11 seconds
-            $currentLat = $query['currentLocation'][1]+0.11; //every 11 seconds
-            Trip::where('scooter_id', $scooterId)->update(['currentLocation' => json_encode([$currentLong, $currentLat])]);
-            info('Current Location for Scooter with ID '. $scooterId. ' is Long: '. $currentLong. ' and Lat: '.$currentLat);
-
-           $this->info('');
-           $this->info('Location of Scooter with ID '. $scooterId.' Updated');
-           $this->info('');
-
+        $response = Http::put('http://localhost/api/v1/trip/update/'.$scooterId);
+        if($response->failed()){
+            $errorMsg = ["message"=> 'Error Updating Scooter'. $scooterId];
+            dd($errorMsg);
         }
+        $postResponse = $response->json();
+        dd($postResponse);
     }
 }
