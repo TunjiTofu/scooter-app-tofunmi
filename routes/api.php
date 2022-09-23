@@ -35,7 +35,7 @@ Route::get('/scooter-create', function(){
     return "Scooter Created";
 });
 
-Route::get('/scooter-update', function(){
-    Artisan::call('scooter:update 1');
-    return "Scooter Updated";
-});
+// Route::get('/scooter-update', function(){
+//     Artisan::call('scooter:update 1');
+//     return "Scooter Updated";
+// });
