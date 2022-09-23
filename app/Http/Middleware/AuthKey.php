@@ -18,7 +18,7 @@ class AuthKey
     {
         $token = $request->header('API_KEY');
         if($token != env('API_KEY')){
-            return response()->json(['message'=>'Invalid API Key'], 401);
+            return response()->json(['message'=>'Missing/Invalid API Key'], 401);
         }
         return $next($request);
     }

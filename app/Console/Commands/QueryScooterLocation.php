@@ -33,8 +33,9 @@ class QueryScooterLocation extends Command
         $radius = $this->argument(key: 'radius');
         $clientCurrentLat = $this->argument(key: 'clientCurrentLat');
         $clientCurrentLng = $this->argument(key: 'clientCurrentLng');
+        $key = env('API_KEY');
 
-        $response = Http::post('http://localhost/api/v1/client/scooters', [
+        $response = Http::withHeaders(['API_KEY' => $key])->post('http://localhost/api/v1/client/scooters', [
             "radius" =>$radius,
             "clientCurrentLat" => $clientCurrentLat,
             "clientCurrentLng" => $clientCurrentLng
