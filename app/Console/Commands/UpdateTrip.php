@@ -31,12 +31,13 @@ class UpdateTrip extends Command
     {
         $scooterId = $this->argument(key: 'scooterId');
 
-        $response = Http::put('http://localhost/api/v1/trip/update/'.$scooterId);
-        if($response->failed()){
-            $errorMsg = ["message"=> 'Error Updating Scooter'. $scooterId];
-            dd($errorMsg);
+        $response = Http::put('http://localhost/api/v1/trip/update/' . $scooterId);
+        if ($response->failed()) {
+            $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
+            // dd($errorMsg);
+            info($errorMsg);
         }
         $postResponse = $response->json();
-        dd($postResponse);
+        info($postResponse);
     }
 }

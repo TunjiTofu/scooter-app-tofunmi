@@ -67,10 +67,10 @@ class TripRepository implements TripRepositoryInterface
         }
     }
 
-    public function stopScooterTrip(StopTripRequest $request, int $id)
+    public function stopScooterTrip(StopTripRequest $request)
     {
         try {
-            $trip = Trip::find($id);
+            $trip = Trip::find($request->trip_id);
             $trip->stop_location = new Point(lat: $request->endLatitude, lng: $request->endLongitude);
             $trip->status = 0;
             $trip->update();
