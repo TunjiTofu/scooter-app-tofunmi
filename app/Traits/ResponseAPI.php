@@ -2,39 +2,30 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\JsonResponse;
 trait ResponseAPI
 {
-
-    public function coreResponse($message, $data = null, $statusCode, $isSuccess = true)
+    public function buildResponse($message = '', $data = null, $statusCode, $isSuccess = false): JsonResponse
     {
-        // Check the params
-        if (!$message) return response()->json(['message' => 'Message is required'], 500);
-
-        // Send the response
-        if ($isSuccess) {
+        if (!$isSuccess) {
             return response()->json([
                 'message' => $message,
-                'error' => false,
-                'code' => $statusCode,
-                'results' => $data
-            ], $statusCode);
-        } else {
-            return response()->json([
-                'message' => $message,
-                'error' => true,
-                'code' => $statusCode,
             ], $statusCode);
         }
+
+        return response()->json([
+            'message' => $message,
+            'results' => $data
+        ], $statusCode);
     }
 
-    public function success($message, $data, $statusCode)
+    public function buildSuccessResponse($message, $data, $statusCode): JsonResponse
     {
-        return $this->coreResponse($message, $data, $statusCode);
+        return $this->buildResponse($message, $data, $statusCode, true);
     }
 
-
-    public function error($message, $statusCode)
+    public function buildErrorResponse($message, $statusCode): JsonResponse
     {
-        return $this->coreResponse($message, null, $statusCode, false);
+        return $this->buildResponse($message, null, $statusCode);
     }
 }

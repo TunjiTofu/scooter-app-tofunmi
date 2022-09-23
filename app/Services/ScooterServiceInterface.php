@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repository;
+namespace App\Services;
 
 use App\Http\Requests\ClientScooterRequest;
 
-interface ScooterRepositoryInterface{
+interface ScooterServiceInterface
+{
     public function locateScooter(ClientScooterRequest $request);
 }
- 
-?> 

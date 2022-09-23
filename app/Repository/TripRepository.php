@@ -8,45 +8,35 @@ use App\Events\TripEnds;
 use App\Events\TripUpdates;
 use App\Http\Requests\StartTripRequest;
 use App\Http\Requests\StopTripRequest;
-use App\Http\Requests\StoreTripRequest;
 use App\Models\Scooter;
 use App\Models\Trip;
 use App\Traits\ResponseAPI;
-// use MatanYadaev\EloquentSpatial\Objects\Point;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
 class TripRepository implements TripRepositoryInterface
 {
     use ResponseAPI;
-    protected $trip;
+    protected Trip $trip;
 
     public function __construct(Trip $trip)
     {
         $this->trip = $trip;
     }
 
-    public function startScooterTrip(StartTripRequest $request, int $id = null)
+    public function startTrip(StartTripRequest $request, int $id = null)
     {
-        // dd($request);
-
-
         try {
-
-            $scooter = Scooter::where([['id', $request->scooter_id], ['status', 1]])->first();
-            if ($scooter != null) {
-                $msg = "Scooter " . $request->scooter_id . " is busy";
-                // return [];
-                return $this->error($msg, 403);
+            $isScooterBusy = $this->isScooterBusy($request->scooter_id);
+            if ($isScooterBusy) {
+                $message = "Scooter " . $request->scooter_id . " is busy";
+                return $this->buildErrorResponse($message, 403);
             }
 
-            $client = Trip::where([['client_id', $request->client_id], ['status', 1]])->first();
-        // dd($request);
-        if ($client != null) {
-                $msg = "This Client with ID " . $request->client_id . " is on a trip";
-                // return [];
-                return $this->error($msg, 403);
+            $isClientBusy = $this->isClientBusy($request->client_id);
+            if ($isClientBusy) {
+                $message = "This Client with ID " . $request->client_id . " is on a trip";
+                return $this->buildErrorResponse($message, 403);
             }
-
 
             $query = $this->trip->query()->create([
                 'scooter_id' => $request->scooter_id,
@@ -60,14 +50,14 @@ class TripRepository implements TripRepositoryInterface
 
             //Event
             TripBegins::dispatch($request->scooter_id);
- 
-            return $this->success("Trip Started", $query, 200);
-        } catch (\Throwable $th) {
-            return $this->error($th->getMessage(), 403);
+
+            return $this->buildSuccessResponse("Trip Started", $query, 200);
+        } catch (\Throwable $exception) {
+            return $this->buildErrorResponse($exception->getMessage(), 403);
         }
     }
 
-    public function stopScooterTrip(StopTripRequest $request)
+    public function stopTrip(StopTripRequest $request)
     {
         try {
             $trip = Trip::find($request->trip_id);
@@ -77,21 +67,20 @@ class TripRepository implements TripRepositoryInterface
 
             //Event
             TripEnds::dispatch($request->scooter_id);
-            ScooterUpdates::dispatch($request->scooter_id,$request->endLatitude, $request->endLongitude);
+            ScooterUpdates::dispatch($request->scooter_id, $request->endLatitude, $request->endLongitude);
 
-
-            return $this->success("Trip Ended", $trip, 200);
-        } catch (\Throwable $th) {
-            return $this->error($th->getMessage(), 403);
+            return $this->buildSuccessResponse("Trip Ended", $trip, 200);
+        } catch (\Throwable $exception) {
+            return $this->buildErrorResponse($exception->getMessage(), 403);
         }
     }
 
-    public function updateScooterTrip(int $scooter_id)
+    public function updateTrip(int $scooter_id)
     {
         try {
             $trip = Trip::where('scooter_id', $scooter_id)->latest('id')->first();
             if ($trip->status == 0) {
-                return $this->error("This trip has ended and cannot be updated", 403);
+                return $this->buildErrorResponse("This trip has ended and cannot be updated", 403);
             }
 
             $currLat = $trip['current_location']->getLat() + 0.11; //updating current Latitude by 0.11points every 11 seconds
@@ -101,17 +90,28 @@ class TripRepository implements TripRepositoryInterface
             $updateTrip->current_location = new Point(lat: $currLat, lng: $currLng);
             $updateTrip->update();
 
-            // $updateScooter = Scooter::find($scooter_id);
-            // dd($updateScooter);
-            // $updateScooter->location = new Point(lat: $currLat, lng: $currLng);
-            // $updateScooter->update();
-
             //Event
             TripUpdates::dispatch($scooter_id);
 
-            return $this->success("Location Update for Scooter " . $trip['scooter_id'], $trip, 200);
-        } catch (\Throwable $th) {
-            return $this->error($th->getMessage(), 403);
+            return $this->buildSuccessResponse("Location Update for Scooter " . $trip['scooter_id'], $trip, 200);
+        } catch (\Throwable $exception) {
+            return $this->buildErrorResponse($exception->getMessage(), 403);
         }
+    }
+
+    private function isScooterBusy(int $scooterId)
+    {
+        return Scooter::where([
+            ['id', $scooterId],
+            ['status', 1]
+        ])->exists();
+    }
+
+    private function isClientBusy(int $clientId)
+    {
+        return Trip::where([
+            ['client_id', $clientId],
+            ['status', 1]
+        ])->exists();
     }
 }

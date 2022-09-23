@@ -2,33 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\TripBegins;
-use App\Events\TripEnds;
-use App\Events\TripUpdates;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StartTripRequest;
 use App\Http\Requests\StopTripRequest;
-use App\Http\Requests\StoreTripRequest;
-use App\Models\Trip;
-use App\Repository\ITripRepository;
-use App\Services\TripService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Services\TripServiceInterface;
 
 class TripController extends Controller
 {
-    public $tripService;
+    public TripServiceInterface $tripService;
 
-    public function __construct(TripService $tripService)
+    public function __construct(TripServiceInterface $tripService)
     {
         $this->tripService = $tripService;
     }
-    
-    public function index()
-    {
-        //load all trips
-    }
-
+   
     public function startTrip(StartTripRequest $request)
     {
        return $this->tripService->startTrip($request); 

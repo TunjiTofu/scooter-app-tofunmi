@@ -15,11 +15,31 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('scooter:location 10 34.1212 50.1212')->everyMinute()->runInBackground();
+        //variables for scooter location
+        $scooterLocationCommand = 'scooter:location';
+        $radius = 10;
+        $clientLatitude = 34.1212;
+        $clientLongitude = 50.1212;
+
+        $scooterStartCommand = 'scooter:location';
+        $scooterId = 1;
+        $clientId = 1;
+        $startLatitude = 23.43;
+        $startLongitude = 54.67;
+
+        $scooterUpdateCommand = 'scooter:update';
+
+        $scooterEndCommand = 'scooter:end';
+        $tripId = 1;
+        $endLatitude = 23.43;
+        $endLongitude = 54.67;
+
+        $schedule->command($scooterLocationCommand . ' ' . $radius . ' ' . $clientLatitude . ' ' . $clientLongitude)->everyMinute()->runInBackground();
+
         for ($i = 0; $i < 3; $i++) {
-            $schedule->command('scooter:start 1 1 23.23 44.44')->everyMinute()->runInBackground();
-            $schedule->command('scooter:update 1')->everyMinute()->runInBackground();
-            $schedule->command('scooter:end 9 1 12.12 56.56')->everyMinute()->runInBackground();
+            $schedule->command($scooterStartCommand . ' ' . $scooterId . ' ' . $clientId . ' ' . $startLatitude . ' ' . $startLongitude)->everyMinute()->runInBackground();
+            $schedule->command($scooterUpdateCommand . ' ' . $scooterId)->everyMinute()->runInBackground();
+            $schedule->command($scooterEndCommand . ' ' . $tripId . ' ' . $scooterId . ' ' . $endLatitude . ' ' . $endLongitude)->everyMinute()->runInBackground();
         }
     }
 

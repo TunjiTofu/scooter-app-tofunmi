@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\Scooter;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-
 class NotifyScooterBusy
 {
     /**

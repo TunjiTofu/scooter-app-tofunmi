@@ -2,35 +2,32 @@
 
 namespace App\Services;
 
-use App\Events\TripBegins;
 use App\Http\Requests\StartTripRequest;
 use App\Http\Requests\StopTripRequest;
-use App\Http\Requests\StoreTripRequest;
-use App\Repository\ITripRepository;
 use App\Repository\TripRepositoryInterface;
 
-class TripService
+class TripService implements TripServiceInterface
 {
-    public $trip;
+    public TripRepositoryInterface $trip;
 
     public function __construct(TripRepositoryInterface $trip)
     {
         $this->trip = $trip;
     }
 
-    public function startTrip(StartTripRequest $request, int $id=null)
+    public function startTrip(StartTripRequest $request)
     {
-        return $this->trip->startScooterTrip($request);
+        return $this->trip->startTrip($request);
     }
 
     public function stopTrip(StopTripRequest $request)
     {
-       return $this->trip->stopScooterTrip($request);
+       return $this->trip->stopTrip($request);
     }
 
     public function updateTrip(int $scooter_id)
     {
-       return $this->trip->updateScooterTrip($scooter_id);
+       return $this->trip->updateTrip($scooter_id);
     }
 }
 ?>
