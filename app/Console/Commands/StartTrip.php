@@ -39,16 +39,13 @@ class StartTrip extends Command
             "startLatitude" => $startLatitude,
             "startLongitude" => $startLongitude,
         ]);
-        // if ($response->failed()) {
-        //     $errorMsg = ["message" => 'Error Ending Trip'];
-        //     dd($errorMsg);
-        // }
+        if ($response->failed()) {
+            $errorMsg = ["message" => 'Error Ending Trip'];
+            // dd($errorMsg);
+            info($errorMsg);
+        }
         $postResponse = $response->json();
         dd($postResponse);
-
-
-        // info('Scooter Trip Ended');
-        // sleep(5);
-        // info('Scooter is ready for next available pick up');
+        info($postResponse);
     }
 }

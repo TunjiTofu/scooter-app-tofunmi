@@ -12,7 +12,7 @@ class EndTrip extends Command
      *
      * @var string
      */
-    protected $signature = 'scooter:end {tripId} {scooterId} {endLatitude} {endLongitude}';
+    protected $signature = 'scooter:end {trip_id} {scooterId} {endLatitude} {endLongitude}';
 
     /**
      * The console command description.
@@ -28,26 +28,27 @@ class EndTrip extends Command
      */
     public function handle()
     {
-        $tripId = $this->argument(key: 'tripId');
+        $trip_id = $this->argument(key: 'trip_id');
         $scooterId = $this->argument(key: 'scooterId');
         $endLatitude = $this->argument(key: 'endLatitude');
         $endLongitude = $this->argument(key: 'endLongitude');
 
-        $response = Http::post('http://localhost/api/v1/client/scooters/'.$tripId, [
+        $response = Http::post('http://localhost/api/v1/trip/end', [
+            "trip_id" => $trip_id,
             "scooter_id" => $scooterId,
             "endLatitude" =>$endLatitude,
             "endLongitude" => $endLongitude
         ]);
-        // if ($response->failed()) {
-        //     $errorMsg = ["message" => 'Error Ending Trip'];
-        //     dd($errorMsg);
-        // }
+        if ($response->failed()) {
+            $errorMsg = ["message" => 'Error Ending Trip'];
+            info($errorMsg);
+        }
         $postResponse = $response->json();
-        dd($postResponse);
+        // dd($postResponse);
+        info($postResponse);
 
-
-        // info('Scooter Trip Ended');
-        // sleep(5);
-        // info('Scooter is ready for next available pick up');
+        sleep(5);
+        $readyMsg = ["message" => 'Scooter is ready for next available pick up'];
+        info($readyMsg);
     }
 }

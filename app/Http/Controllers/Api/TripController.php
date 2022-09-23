@@ -34,9 +34,9 @@ class TripController extends Controller
        return $this->tripService->startTrip($request); 
     }
 
-    public function endTrip(StopTripRequest $request, int $id)
+    public function endTrip(StopTripRequest $request)
     {
-       return $this->tripService->stopTrip($request, $id);
+       return $this->tripService->stopTrip($request);
     }
 
     public function updateTrip(int $scooter_id)

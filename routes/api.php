@@ -27,7 +27,7 @@ Route::get('/scooter', [ScooterController::class, 'index']);
 Route::post('/client/scooters', [ScooterController::class, 'clientLocateScooters']); 
 
 Route::post('/trip/start', [TripController::class, 'startTrip']);
-Route::post('/trip/end/{id}', [TripController::class, 'endTrip']);
+Route::post('/trip/end', [TripController::class, 'endTrip']);
 Route::get('/trip/update/{id}', [TripController::class, 'updateTrip']);
 
 Route::get('/scooter-create', function(){

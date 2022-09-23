@@ -24,6 +24,7 @@ class StopTripRequest extends FormRequest
     public function rules()
     {
         return [
+            'trip_id' => 'required',
             'scooter_id' => 'required',
             'endLatitude' => 'required',
             'endLongitude' => 'required',
@@ -33,6 +34,7 @@ class StopTripRequest extends FormRequest
     public function messages()
     {
         return[
+            'trip_id.required' => 'Scooter ID is Required',
             'scooter_id.required' => 'Scooter ID is Required',
             'endLatitude.required' => 'End Latitude is Required',
             'endLongitude.required' => 'End Longitude is Required',

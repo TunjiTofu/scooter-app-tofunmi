@@ -23,9 +23,9 @@ class TripService
         return $this->trip->startScooterTrip($request);
     }
 
-    public function stopTrip(StopTripRequest $request, int $id)
+    public function stopTrip(StopTripRequest $request)
     {
-       return $this->trip->stopScooterTrip($request, $id);
+       return $this->trip->stopScooterTrip($request);
     }
 
     public function updateTrip(int $scooter_id)
