@@ -32,8 +32,9 @@ class EndTrip extends Command
         $scooterId = $this->argument(key: 'scooterId');
         $endLatitude = $this->argument(key: 'endLatitude');
         $endLongitude = $this->argument(key: 'endLongitude');
+        $key = env('API_KEY');
 
-        $response = Http::post('http://localhost/api/v1/trip/end', [
+        $response = Http::withHeaders(['API_KEY' => $key])->post('http://localhost/api/v1/trip/end', [
             "trip_id" => $trip_id,
             "scooter_id" => $scooterId,
             "endLatitude" =>$endLatitude,

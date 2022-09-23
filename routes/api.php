@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/scooter', [ScooterController::class, 'index']);
 Route::post('/client/scooters', [ScooterController::class, 'clientLocateScooters']); 
 
-Route::post('/trip/start', [TripController::class, 'startTrip']);
+Route::post('/trip/start', [TripController::class, 'startTrip'])->name('trip.start');
 Route::post('/trip/end', [TripController::class, 'endTrip']);
 Route::get('/trip/update/{id}', [TripController::class, 'updateTrip']);
 

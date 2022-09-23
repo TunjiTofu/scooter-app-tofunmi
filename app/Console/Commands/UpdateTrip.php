@@ -30,8 +30,9 @@ class UpdateTrip extends Command
     public function handle()
     {
         $scooterId = $this->argument(key: 'scooterId');
+        $key = env('API_KEY');
 
-        $response = Http::put('http://localhost/api/v1/trip/update/' . $scooterId);
+        $response = Http::withHeaders(['API_KEY' => $key])->put('http://localhost/api/v1/trip/update/' . $scooterId);
         if ($response->failed()) {
             $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
             // dd($errorMsg);

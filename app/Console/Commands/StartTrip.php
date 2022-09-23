@@ -32,8 +32,9 @@ class StartTrip extends Command
         $client_id = $this->argument(key: 'client_id');
         $startLatitude = $this->argument(key: 'startLatitude');
         $startLongitude = $this->argument(key: 'startLongitude');
+        $key = env('API_KEY');
 
-        $response = Http::post('http://localhost/api/v1/trip/start', [
+        $response = Http::withHeaders(['API_KEY' => $key])->post('http://localhost/api/v1/trip/start', [
             "scooter_id" => $scooter_id,
             "client_id" => $client_id,
             "startLatitude" => $startLatitude,
