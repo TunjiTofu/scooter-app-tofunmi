@@ -44,12 +44,11 @@ class EndTrip extends Command
             $errorMsg = ["message" => 'Error Ending Trip'];
             info($errorMsg);
         }
-        $postResponse = $response->json();
-        info($postResponse);
+        info("Scooter Trip Successfully Ended");
+        $restTime = rand(2,5);
+        sleep($restTime);
+        info("Scooter Resting for ". $restTime ." Seconds...");
 
-        sleep(rand(2,5));
-
-        $readyMsg = ["message" => 'Scooter is ready for next available pick up'];
-        info($readyMsg);
+        info("Scooter is ready for next available pick up");
     } 
 }

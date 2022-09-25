@@ -42,10 +42,8 @@ class QueryScooterLocation extends Command
         ]);
         if($response->failed()){
             $errorMsg = ["message"=> 'Error Locating Scooters'];
-            // dd($errorMsg);
             info($errorMsg);
         }
-        $postResponse = $response->json();
-        info($postResponse);
+        info("Scooters Within Location Successfully Retrieved");
     }
 }
