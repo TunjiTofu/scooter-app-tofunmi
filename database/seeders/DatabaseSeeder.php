@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             ScooterTableSeeder::class,
-            // ClientTableSeeder::class,
+            ClientTableSeeder::class,
             // TripTableSeeder::class,
         ]);
     }

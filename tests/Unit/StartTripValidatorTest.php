@@ -6,9 +6,9 @@ use App\Http\Requests\StartTripRequest;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
-class TestStartTripValidator extends TestCase
+class StartTripValidatorTest extends TestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         $this->rules = (new StartTripRequest())->rules();
