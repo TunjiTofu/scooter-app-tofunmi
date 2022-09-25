@@ -70,7 +70,7 @@ class TripServiceTest extends TestCase
                     "lng": -1.1195537,
                     "srid": 0
                 },
-                "stop_location": {
+                "end_location": {
                     "lat": 0,
                     "lng": 0,
                     "srid": 0

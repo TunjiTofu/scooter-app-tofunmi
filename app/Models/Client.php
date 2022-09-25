@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $hidden = [
+        'id'
+    ];
+    
     public function trips()
     {
         return $this->hasMany(Trip::class);

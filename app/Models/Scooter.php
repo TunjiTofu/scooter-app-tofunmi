@@ -15,6 +15,10 @@ class Scooter extends Model
     use HasUuids;
     use HasSpatial;
 
+    protected $hidden = [
+        'id'
+    ];
+
     protected $fillable = [
         'status',
         'location',
