@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('scooters', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->bigIncrements('id');
+            $table->uuid('uuid')->index();
             $table->point('location'); 
             $table->integer('status')->default(0);
             $table->timestamps();

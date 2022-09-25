@@ -6,11 +6,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
-class StartTripTest extends TestCase
+class b_EndTripTest extends TestCase
 {
-    private const ENDPOINT = 'http://localhost/api/v1/trip/start';
-    
-    public function test_start_trip_should_return_success()
+    private const ENDPOINT = 'http://localhost/api/v1/trip/end';
+
+    public function test_end_trip_should_return_success()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
             'POST',
@@ -21,7 +21,7 @@ class StartTripTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_scooter_busy_status_code()
+    public function test_trip_already_ended_status_code()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
             'POST',
@@ -32,7 +32,7 @@ class StartTripTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_scooter_client_status_code()
+    public function test_trip_yet_to_begin_status_code()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
             'POST',
@@ -56,10 +56,10 @@ class StartTripTest extends TestCase
     private function buildValidRequest(): array
     {
         return [
-            'scooter_id' => 1,
-            'client_id' => 1,
-            'startLatitude' => 12.32,
-            'startLongitude' => 13.34,
+            "trip_id" => 1,
+            "scooter_id" => 1,
+            "endLatitude" =>  34.3434,
+            "endLongitude" => 54.454
         ];
     }
 }

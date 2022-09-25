@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Scooter;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Ramsey\Uuid\Uuid;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
 
@@ -19,17 +19,66 @@ class ScooterTableSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['id' => 1, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 2, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 3, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 4, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 5, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 6, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 7, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 8, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 9, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-            ['id' => 10, 'location' =>  new Point(lat: 34.3434, lng: 54.454), 'status' => 0],
-           
+            [
+                'id' => 1, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 2, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 3, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 4, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 5, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 6, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 7, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 8, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 9, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
+            [
+                'id' => 10, 
+                'uuid'=> Uuid::uuid4()->toString(), 
+                'location' =>  new Point(lat: 34.3434, lng: 54.454), 
+                'status' => 0
+            ],
         ];
         foreach ($data as $key => $value) {
             Scooter::create($value);

@@ -11,6 +11,7 @@ use App\Http\Requests\StopTripRequest;
 use App\Models\Scooter;
 use App\Models\Trip;
 use App\Traits\ResponseAPI;
+use Ramsey\Uuid\Uuid;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
 class TripRepository implements TripRepositoryInterface
@@ -39,11 +40,12 @@ class TripRepository implements TripRepositoryInterface
             }
 
             $query = $this->trip->query()->create([
+                'uuid' => Uuid::uuid4()->toString(),
                 'scooter_id' => $request->scooter_id,
                 'client_id' => $request->client_id,
                 'start_location' => new Point(lat: $request->startLatitude, lng: $request->startLongitude),
                 'current_location' => new Point(lat: $request->startLatitude, lng: $request->startLongitude),
-                'stop_location' => new Point(lat: 0, lng: 0),
+                'end_location' => new Point(lat: 0, lng: 0),
                 'status' => 1,
 
             ]);
@@ -60,8 +62,20 @@ class TripRepository implements TripRepositoryInterface
     public function stopTrip(StopTripRequest $request)
     {
         try {
+            $tripExist = $this->tripExist($request->trip_id);
+            if (!$tripExist) {
+                $message = "This Trip is yet to Begin";
+                return $this->buildErrorResponse($message, 403);
+            }
+
+            $tripEnded = $this->tripEnded($request->trip_id);
+            if ($tripEnded) {
+                $message = "This Trip Has Ended and It's Inactive";
+                return $this->buildErrorResponse($message, 403);
+            }
+
             $trip = Trip::find($request->trip_id);
-            $trip->stop_location = new Point(lat: $request->endLatitude, lng: $request->endLongitude);
+            $trip->end_location = new Point(lat: $request->endLatitude, lng: $request->endLongitude);
             $trip->status = 0;
             $trip->update();
 
@@ -78,11 +92,12 @@ class TripRepository implements TripRepositoryInterface
     public function updateTrip(int $scooter_id)
     {
         try {
-            $trip = Trip::where('scooter_id', $scooter_id)->latest('id')->first();
-            if ($trip->status == 0) {
+            $tripActive = $this->isTripActive($scooter_id);;
+            if (!$tripActive) {
                 return $this->buildErrorResponse("This trip has ended and cannot be updated", 403);
             }
 
+            $trip = Trip::where('scooter_id', $scooter_id)->latest('id')->first();
             $currLat = $trip['current_location']->getLat() + 0.11; //updating current Latitude by 0.11points every 11 seconds
             $currLng = $trip['current_location']->getLng() + 0.11; //updating current Longitude by 0.11points every 11 seconds
 
@@ -111,6 +126,29 @@ class TripRepository implements TripRepositoryInterface
     {
         return Trip::where([
             ['client_id', $clientId],
+            ['status', 1]
+        ])->exists();
+    }
+
+    private function tripExist(int $tripId)
+    {
+        return Trip::where([
+            ['id', $tripId],
+        ])->exists();
+    }
+
+    private function tripEnded(int $tripId)
+    {
+        return Trip::where([
+            ['id', $tripId],
+            ['status', 0]
+        ])->exists();
+    }
+
+    private function isTripActive(int $scooter_id)
+    {
+        return Trip::where([
+            ['scooter_id', $scooter_id],
             ['status', 1]
         ])->exists();
     }
