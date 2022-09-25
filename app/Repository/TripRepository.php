@@ -23,7 +23,7 @@ class TripRepository implements TripRepositoryInterface
         $this->trip = $trip;
     }
 
-    public function startTrip(StartTripRequest $request, int $id = null)
+    public function startTrip(StartTripRequest $request)
     {
         try {
             $isScooterBusy = $this->isScooterBusy($request->scooter_id);
