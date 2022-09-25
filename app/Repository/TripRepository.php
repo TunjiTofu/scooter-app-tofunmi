@@ -70,8 +70,8 @@ class TripRepository implements TripRepositoryInterface
 
             $tripEnded = $this->tripEnded($request->trip_id);
             if ($tripEnded) {
-                $message = "This Trip Has Ended and It's Inactive";
-                return $this->buildErrorResponse($message, 403);
+                $message = "This Trip Has Ended and It is Inactive";
+                return $this->buildErrorResponse($message, 403); 
             }
 
             $trip = Trip::find($request->trip_id);
