@@ -20,7 +20,7 @@ class UpdateTrip extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update scooter location';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class UpdateTrip extends Command
         $scooterId = $this->argument(key: 'scooterId');
         $key = env('API_KEY');
 
-        $response = Http::withHeaders(['API_KEY' => $key])->put('http://localhost/api/v1/trip/update/' . $scooterId);
+        $response = Http::withHeaders(['API_KEY' => $key])->get('http://localhost/api/v1/trip/update/'.$scooterId);
         if ($response->failed()) {
             $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
             info($errorMsg);

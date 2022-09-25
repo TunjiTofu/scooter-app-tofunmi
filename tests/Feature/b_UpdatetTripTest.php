@@ -13,7 +13,7 @@ class b_UpdatetTripTest extends TestCase
     public function test_update_trip_should_return_success()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
-            'POST',
+            'GET',
             self::ENDPOINT,
             // $this->buildValidRequest()
         );

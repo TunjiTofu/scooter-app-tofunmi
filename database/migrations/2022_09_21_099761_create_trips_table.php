@@ -22,7 +22,6 @@ return new class extends Migration
             $table->point('current_location')->nullable();
             $table->point('end_location')->nullable();
             $table->integer('status')->default(0);
-            // $table->polygon('area');
             $table->foreign('scooter_id')->references('id')->on('scooters')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->timestamps();
