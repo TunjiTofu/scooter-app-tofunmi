@@ -40,11 +40,10 @@ class StartTrip extends Command
             "startLatitude" => $startLatitude,
             "startLongitude" => $startLongitude,
         ]);
-        if ($response->failed()) {
-            $errorMsg = ["message" => 'Error Ending Trip'];
+        if($response->failed()) {
+            $errorMsg = ["message" => 'Error Starting Trip'];
             info($errorMsg);
         }
-        $postResponse = $response->json();
-        info($postResponse);
+        info("Trip Started Successfully");
     }
 }

@@ -120,7 +120,7 @@ docker run --rm \
         ```
             ./vendor/bin/sail artisan scooter:update 1
         ```
- # Not Working - Ending a Trip:
+ - Ending a Trip:
       - This terminates a particular trip and register the last location.
       - Below is the code to run the client command to end a trip
       - `./vendor/bin/sail scooter:end {trip_id} {scooterId} {endLatitude} {endLongitude`. For example:
@@ -130,9 +130,9 @@ docker run --rm \
  - Runing the three processes concurrently:
       - This runs the three processes concurrently every one minute
       - Below is the code to run the three process concurrently
-      - `./vendor/bin/sail artisan scooter:update {scooterId}`. For example:
+      - `./vendor/bin/sail artisan run:clients`. For example:
         ```
-            ./vendor/bin/sail artisan scooter:update 1
+            ./vendor/bin/sail artisan run:clients
         ```
 
 ## To Execute the Test:

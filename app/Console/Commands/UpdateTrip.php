@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Trip;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -37,7 +36,6 @@ class UpdateTrip extends Command
             $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
             info($errorMsg);
         }
-        $postResponse = $response->json();
-        info($postResponse);
+        info("Scooter Location Updated Successfully");
     }
 }
