@@ -60,6 +60,18 @@ class TripRepository implements TripRepositoryInterface
     public function stopTrip(StopTripRequest $request)
     {
         try {
+            $tripExist = $this->tripExist($request->trip_id);
+            if (!$tripExist) {
+                $message = "This Trip is yet to Begin";
+                return $this->buildErrorResponse($message, 403);
+            }
+
+            $tripEnded = $this->tripEnded($request->trip_id);
+            if ($tripEnded) {
+                $message = "This Trip Has Ended and It's Inactive";
+                return $this->buildErrorResponse($message, 403);
+            }
+
             $trip = Trip::find($request->trip_id);
             $trip->stop_location = new Point(lat: $request->endLatitude, lng: $request->endLongitude);
             $trip->status = 0;
@@ -112,6 +124,21 @@ class TripRepository implements TripRepositoryInterface
         return Trip::where([
             ['client_id', $clientId],
             ['status', 1]
+        ])->exists();
+    }
+
+    private function tripExist(int $tripId)
+    {
+        return Trip::where([
+            ['id', $tripId],
+        ])->exists();
+    }
+
+    private function tripEnded(int $tripId)
+    {
+        return Trip::where([
+            ['id', $tripId],
+            ['status', 0]
         ])->exists();
     }
 }

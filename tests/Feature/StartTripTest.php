@@ -9,7 +9,7 @@ use Tests\TestCase;
 class StartTripTest extends TestCase
 {
     private const ENDPOINT = 'http://localhost/api/v1/trip/start';
-    
+
     public function test_start_trip_should_return_success()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
@@ -56,8 +56,8 @@ class StartTripTest extends TestCase
     private function buildValidRequest(): array
     {
         return [
-            'scooter_id' => 1,
-            'client_id' => 1,
+            'scooter_id' => 3,
+            'client_id' => 3,
             'startLatitude' => 12.32,
             'startLongitude' => 13.34,
         ];
