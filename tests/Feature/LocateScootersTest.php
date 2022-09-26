@@ -6,16 +6,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
-class b_UpdatetTripTest extends TestCase
+class LocateScootersTest extends TestCase
 {
-    private const ENDPOINT = 'http://localhost/api/v1/trip/update/1';
+    private const ENDPOINT = 'http://localhost/api/v1/client/scooters';
 
-    public function test_update_trip_should_return_success()
+    public function test_locate_Scooters_should_return_success()
     {
         $response = $this->withHeaders($this->buildRequestHeaders())->json(
-            'GET',
+            'POST',
             self::ENDPOINT,
-            // $this->buildValidRequest()
+            $this->buildValidRequest()
         );
 
         $response->assertStatus(200);
@@ -27,17 +27,16 @@ class b_UpdatetTripTest extends TestCase
             'X-Header' => 'Value',
             'Content-Type' => 'application/vnd.api+json',
             'Accept' => 'application/vnd.api+json',
-            'API_KEY' => 'tofunmiScooter'
+            'API_KEY' => 'e403d4e8-92ef-4335-a521-35b99746f8f6'
         ];
     }
 
     private function buildValidRequest(): array
     {
         return [
-            'scooter_id' => 1,
-            'client_id' => 1,
-            'startLatitude' => 12.32,
-            'startLongitude' => 13.34,
+            "radius" => 10,
+            "clientCurrentLat" => 34.3434,
+            "clientCurrentLng" => 54.454
         ];
     }
 }

@@ -33,9 +33,10 @@ class UpdateTrip extends Command
 
         $response = Http::withHeaders(['API_KEY' => $key])->get('http://localhost/api/v1/trip/update/'.$scooterId);
         if ($response->failed()) {
-            $errorMsg = ["message" => 'Error Updating Scooter' . $scooterId];
+            $errorMsg = ["Error" => $response->json()];
             info($errorMsg);
+        }else{
+            info("Scooter Location Updated Successfully");
         }
-        info("Scooter Location Updated Successfully");
     }
 }

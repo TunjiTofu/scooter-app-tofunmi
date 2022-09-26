@@ -10,10 +10,16 @@ class Client extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $primaryKey = 'uuid';
+
     protected $hidden = [
         'id'
     ];
     
+    protected $fillable = [
+        'status',
+    ];
+
     public function trips()
     {
         return $this->hasMany(Trip::class);

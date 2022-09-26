@@ -9,6 +9,6 @@ interface TripServiceInterface
 {
     public function startTrip(StartTripRequest $request);
     public function stopTrip(StopTripRequest $request);
-    public function updateTrip(int $scooter_id);
+    public function updateTrip(string $scooter_id);
 }
-?>
+?> 
