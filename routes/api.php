@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\ScooterController;
 use App\Http\Controllers\Api\TripController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
  
 /*
