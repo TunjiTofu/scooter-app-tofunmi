@@ -41,12 +41,12 @@ $ ./vendor/bin/sail artisan key:generate
 - Open the .env file and do the following
     - Update the following variables in the .env file
     ```
-    B_CONNECTION=mysql
+    DB_CONNECTION=mysql
     DB_HOST=mysql
     DB_PORT=3306
     DB_DATABASE= << use a desired database name >>
-    DB_USERNAME= << use a desired user name >>
-    DB_PASSWORD=<< use a desired password >>
+    DB_USERNAME= << provide your Database username >>
+    DB_PASSWORD= << provide your Database username >>
     ```
 - Using any Database Management System (DBMS), create a database that conforms with the database variable name in your .env file
 - Run the following command to run the database migrations
@@ -108,21 +108,21 @@ $ ./vendor/bin/sail artisan db:seed
       - Below is the code to run the client command to start a trip
       - `./vendor/bin/sail artisan scooter:start {scooter_id} {client_id} {startLatitude} {startLongitude}`. For example:
         ```
-        $ ./vendor/bin/sail artisan scooter:start 1 1 34.0201 54.454
+        $ ./vendor/bin/sail artisan scooter:start 57be09f9-7ed5-425b-af2d-3b9c782b7323 4a47774e-3a88-4d5e-acc9-f8fd589b80d4 34.3434 1.1195537
         ```
  - Updating a Scooter Location:
       - This updates the scooter's locationat intervals. Currently, both latitude and longitude are updated by 0.11points (which represents every 11 seconds)
       - Below is the code to run the client command to update a scooter location on a trip
       - `./vendor/bin/sail artisan scooter:update {scooterId}`. For example:
         ```
-        $ ./vendor/bin/sail artisan scooter:update 1
+        $ ./vendor/bin/sail artisan scooter:update 57be09f9-7ed5-425b-af2d-3b9c782b7323
         ```
  - Ending a Trip:
       - This terminates a particular trip and register the last location.
       - Below is the code to run the client command to end a trip
-      - `./vendor/bin/sail scooter:end {trip_id} {scooterId} {endLatitude} {endLongitude`. For example:
+      - `./vendor/bin/sail scooter:end {client_id} {scooterId} {endLatitude} {endLongitude}`. For example:
         ```
-        $ ./vendor/bin/sail artisan scooter:end 1 1 40.123, 11.3444
+        $ ./vendor/bin/sail artisan scooter:end 4a47774e-3a88-4d5e-acc9-f8fd589b80d3 57be09f9-7ed5-425b-af2d-3b9c782b7323 40.123 11.3444
         ```
  - Runing the three processes concurrently:
       - This runs the three processes concurrently every one minute
@@ -147,12 +147,14 @@ $ ./vendor/bin/sail artisan db:seed
     APP_DEBUG=true
     APP_URL=
 
+    API_KEY=<< GET THE API KEY FROM THE .env file >>
+
     DB_CONNECTION=mysql
     DB_HOST=mysql
     DB_PORT=3306
     DB_DATABASE=testing
-    DB_USERNAME=root
-    DB_PASSWORD=
+    DB_USERNAME= << provide your Database username >>
+    DB_PASSWORD= << provide your Database username >>
     ```
   ```
   $ ./vendor/bin/sail artisan migrate --seed --env=testing

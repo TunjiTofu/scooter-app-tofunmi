@@ -49,7 +49,7 @@ class b_EndTripTest extends TestCase
             'X-Header' => 'Value',
             'Content-Type' => 'application/vnd.api+json',
             'Accept' => 'application/vnd.api+json',
-            'API_KEY' => 'e403d4e8-92ef-4335-a521-35b99746f8f6'
+            'API_KEY' => env('API_KEY')
         ];
     }
 
