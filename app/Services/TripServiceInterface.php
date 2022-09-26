@@ -11,4 +11,3 @@ interface TripServiceInterface
     public function stopTrip(StopTripRequest $request);
     public function updateTrip(string $scooter_id);
 }
-?> 

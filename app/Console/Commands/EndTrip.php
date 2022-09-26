@@ -42,14 +42,13 @@ class EndTrip extends Command
         ]);
         if ($response->failed()) {
             $errorMsg = ["Error" => $response->json()];
-            info($errorMsg);
+            print_r($errorMsg);
         } else {
-            info("Scooter Trip Successfully Ended");
+            print("Scooter Trip Successfully Ended". PHP_EOL);
             $restTime = rand(2, 5);
             sleep($restTime);
-            info("Scooter Resting for " . $restTime . " Seconds...");
-
-            info("Scooter is ready for next available pick up");
+            print("Scooter Resting for " . $restTime . " Seconds...". PHP_EOL);
+            print("Scooter is ready for next available pick up". PHP_EOL);
         }
     }
 }

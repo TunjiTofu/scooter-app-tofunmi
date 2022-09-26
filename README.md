@@ -92,10 +92,7 @@ $ ./vendor/bin/sail artisan db:seed
 
 
 ## Running the Client Commands
-### Before running the client commands, it is important to open laravel.log file to see the result of the commands (see file path below)
-```
-    /storage/logs/laravel.log
-```
+### In your terminal, run the following commands
   - Searching for Nearby Scooters:
       - This returns all Scooters within a particular radius of the client's current location
       - Below is the code to run the client command to locate scooters

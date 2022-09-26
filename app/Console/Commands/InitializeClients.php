@@ -43,17 +43,17 @@ class InitializeClients extends Command
         $scooterUpdateCommand = 'scooter:update';
 
         $scooterEndCommand = 'scooter:end';
-        $endLatitude = "23.43";
-        $endLongitude = "54.67";
+        $endLatitude = "65.3323";
+        $endLongitude = "81.0933";
 
         $this->call($scooterLocationCommand, ['radius' => $radius, 'clientCurrentLat' => $clientLatitude, 'clientCurrentLng' => $clientLongitude]);
 
         for ($i = 0; $i <= 2; $i++) {
-            info("Process " . $i+1);
+            print("Process " . $i+1 . PHP_EOL);
             $this->call($scooterStartCommand, ['scooter_id' => $scooterId[$i], 'client_id' => $clientId[$i], 'startLatitude' => $startLatitude, 'startLongitude' => $startLongitude]);
             $this->call($scooterUpdateCommand, ['scooterId' => $scooterId[$i]]);
             $this->call($scooterEndCommand, ['client_id' => $clientId[$i], 'scooterId' => $scooterId[$i], 'endLatitude' => $endLatitude, 'endLongitude' => $endLongitude]);
-            info("---------------------------------------------------------------------");
+            print("---------------------------------------------------------------------". PHP_EOL);
         }
     }
 }

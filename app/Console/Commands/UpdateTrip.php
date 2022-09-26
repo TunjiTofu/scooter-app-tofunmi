@@ -31,12 +31,12 @@ class UpdateTrip extends Command
         $scooterId = $this->argument(key: 'scooterId');
         $key = env('API_KEY');
 
-        $response = Http::withHeaders(['API_KEY' => $key])->get('http://localhost/api/v1/trip/update/'.$scooterId);
+        $response = Http::withHeaders(['API_KEY' => $key])->get('http://localhost/api/v1/trip/update/'. $scooterId);
         if ($response->failed()) {
             $errorMsg = ["Error" => $response->json()];
-            info($errorMsg);
-        }else{
-            info("Scooter Location Updated Successfully");
+            print_r($errorMsg);
+        } else {
+            print("Scooter Location Updated Successfully". PHP_EOL);
         }
     }
 }
