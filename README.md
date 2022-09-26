@@ -147,8 +147,6 @@ $ ./vendor/bin/sail artisan db:seed
     APP_DEBUG=true
     APP_URL=
 
-    API_KEY=tofunmiScooter
-
     DB_CONNECTION=mysql
     DB_HOST=mysql
     DB_PORT=3306

@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class LocateScootersTest extends TestCase
 {
-    private const ENDPOINT = 'http://localhost/api/v1/client/scooter';
+    private const ENDPOINT = 'http://localhost/api/v1/client/scooters';
 
     public function test_locate_Scooters_should_return_success()
     {
@@ -27,7 +27,7 @@ class LocateScootersTest extends TestCase
             'X-Header' => 'Value',
             'Content-Type' => 'application/vnd.api+json',
             'Accept' => 'application/vnd.api+json',
-            'API_KEY' => 'tofunmiScooter'
+            'API_KEY' => 'e403d4e8-92ef-4335-a521-35b99746f8f6'
         ];
     }
 

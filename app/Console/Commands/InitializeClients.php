@@ -35,26 +35,25 @@ class InitializeClients extends Command
         $clientLongitude = "50.1212";
 
         $scooterStartCommand = 'scooter:start';
-        $scooterId = 1;
-        $clientId = 1;
+        $scooterId = ["57be09f9-7ed5-425b-af2d-3b9c782b7323", "66d6ca39-9e59-4b97-8236-32fd44375f55", "d6f4179f-5890-4882-9a4d-0eff1e41f22e"];
+        $clientId = ["4a47774e-3a88-4d5e-acc9-f8fd589b80d3", "84442851-1db3-46b3-bf5c-0456b32d77bc", "20b6aa95-8b63-4eb3-bf61-c71dccc93b7c"];
         $startLatitude = "23.43";
         $startLongitude = "54.67";
 
         $scooterUpdateCommand = 'scooter:update';
 
         $scooterEndCommand = 'scooter:end';
-        $tripId = 1;
         $endLatitude = "23.43";
         $endLongitude = "54.67";
 
         $this->call($scooterLocationCommand, ['radius' => $radius, 'clientCurrentLat' => $clientLatitude, 'clientCurrentLng' => $clientLongitude]);
 
-        for ($i = 1; $i <= 3; $i++) {
-            info("Process " . $i);
-            $this->call($scooterStartCommand, ['scooter_id' => $i, 'client_id' => $i, 'startLatitude' => $startLatitude, 'startLongitude' => $startLongitude]);
-            $this->call($scooterUpdateCommand, ['scooterId' => $i]);
-            $this->call($scooterEndCommand, ['trip_id' => $i, 'scooterId' => $i, 'endLatitude' => $endLatitude, 'endLongitude' => $endLongitude]);
-            info("---------------------------------------");
+        for ($i = 0; $i <= 2; $i++) {
+            info("Process " . $i+1);
+            $this->call($scooterStartCommand, ['scooter_id' => $scooterId[$i], 'client_id' => $clientId[$i], 'startLatitude' => $startLatitude, 'startLongitude' => $startLongitude]);
+            $this->call($scooterUpdateCommand, ['scooterId' => $scooterId[$i]]);
+            $this->call($scooterEndCommand, ['client_id' => $clientId[$i], 'scooterId' => $scooterId[$i], 'endLatitude' => $endLatitude, 'endLongitude' => $endLongitude]);
+            info("---------------------------------------------------------------------");
         }
     }
 }
