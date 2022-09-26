@@ -19,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
- 
 
-Route::get('/scooter', [ScooterController::class, 'index']);
 Route::post('/client/scooters', [ScooterController::class, 'locateScooters']); 
 
 Route::post('/trip/start', [TripController::class, 'startTrip'])->name('trip.start');
