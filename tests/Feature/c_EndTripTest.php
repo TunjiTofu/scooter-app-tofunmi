@@ -57,7 +57,7 @@ class b_EndTripTest extends TestCase
     {
         return [
             "client_id" => '4a47774e-3a88-4d5e-acc9-f8fd589b80d3',
-            "scooter_id" => 'bb8dee5b-016e-43c9-bff6-9373e18321cf',
+            "scooter_id" => '57be09f9-7ed5-425b-af2d-3b9c782b7323',
             "endLatitude" =>  34.3434,
             "endLongitude" => 54.454
         ];
