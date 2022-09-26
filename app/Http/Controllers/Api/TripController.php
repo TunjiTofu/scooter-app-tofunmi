@@ -18,8 +18,11 @@ class TripController extends Controller
     public ScooterServiceInterface $scooterService;
     public ClientServiceInterface $clientService;
 
-    public function __construct(TripServiceInterface $tripService, ScooterServiceInterface $scooterService, ClientServiceInterface $clientService)
-    {
+    public function __construct(
+        TripServiceInterface $tripService,
+        ScooterServiceInterface $scooterService,
+        ClientServiceInterface $clientService
+    ) {
         $this->tripService = $tripService;
         $this->scooterService = $scooterService;
         $this->clientService = $clientService;
@@ -27,7 +30,7 @@ class TripController extends Controller
 
     public function startTrip(StartTripRequest $request)
     {
-        $scooter = $this->scooterService->getScooterByUuid($request->input('scooter_id'));
+        $scooter = $this->getScooterByUuid($request->input('scooter_id'));
         if ($scooter == null) {
             return $this->buildErrorResponse('Scooter does not exist', 403);
         }
@@ -36,12 +39,12 @@ class TripController extends Controller
             return $this->buildErrorResponse('This Scooter is currently busy', 403);
         }
 
-        $client = $this->clientService->getClientByUuid($request->input('client_id'));
-        if ($client == null) {
+        $clientData =  $this->getClientByUuid($request->input('client_id'));
+        if ($clientData == null) {
             return $this->buildErrorResponse('Client does not exist', 403);
         }
 
-        if ($client->status == 1) {
+        if ($clientData->status == 1) {
             return $this->buildErrorResponse('This Client is already on a trip', 403);
         }
 
@@ -50,13 +53,13 @@ class TripController extends Controller
 
     public function endTrip(StopTripRequest $request)
     {
-        $scooter = $this->scooterService->getScooterByUuid($request->input('scooter_id'));
+        $scooter = $this->getScooterByUuid($request->input('scooter_id'));
         if ($scooter == null) {
             return $this->buildErrorResponse('Scooter does not exist', 403);
         }
 
-        $client = $this->clientService->getClientByUuid($request->input('client_id'));
-        if ($client == null) {
+        $clientData =  $this->getClientByUuid($request->input('client_id'));
+        if ($clientData == null) {
             return $this->buildErrorResponse('Client does not exist', 403);
         }
         return $this->tripService->stopTrip($request);
@@ -64,10 +67,20 @@ class TripController extends Controller
 
     public function updateTrip(string $scooter_id)
     {
-        $scooter = $this->scooterService->getScooterByUuid($scooter_id);
+        $scooter = $this->getScooterByUuid($scooter_id);
         if ($scooter == null) {
             return $this->buildErrorResponse('Scooter does not exist', 403);
         }
         return $this->tripService->updateTrip($scooter_id);
+    }
+
+    private function getScooterByUuid(string $scooter_id)
+    {
+        return $this->scooterService->getScooterByUuid($scooter_id);
+    }
+
+    private function getClientByUuid(string $client_id)
+    {
+        return $this->clientService->getClientByUuid($client_id);
     }
 }

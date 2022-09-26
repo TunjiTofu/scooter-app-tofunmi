@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Scooter;
-use App\Traits\ResponseAPI;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -42,8 +40,8 @@ class QueryScooterLocation extends Command
         ]);
         if($response->failed()){
             $errorMsg = ["message"=> 'Error Locating Scooters'];
-            info($errorMsg);
+            print($errorMsg . PHP_EOL);
         }
-        info("Scooters Within Location Successfully Retrieved");
+        print("Scooters Within Location Successfully Retrieved". PHP_EOL);
     }
 }

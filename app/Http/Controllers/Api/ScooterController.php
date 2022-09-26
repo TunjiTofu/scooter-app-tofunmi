@@ -15,7 +15,7 @@ class ScooterController extends Controller
         $this->scooterService = $scooterService;
     }
 
-    public function clientLocateScooters(ClientScooterRequest $request)
+    public function locateScooters(ClientScooterRequest $request)
     {
         return $this->scooterService->locateScooter($request);
     }

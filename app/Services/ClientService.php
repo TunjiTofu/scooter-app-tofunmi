@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\ClientScooterRequest;
 use App\Repository\ClientRepositoryInterface;
-use App\Repository\ScooterRepositoryInterface;
 class ClientService implements ClientServiceInterface
 {
     public ClientRepositoryInterface $client;
@@ -18,6 +16,4 @@ class ClientService implements ClientServiceInterface
     {
        return $this->client->getClientByUuid($clientId);
     }
-
 }
-?>
