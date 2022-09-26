@@ -28,7 +28,6 @@ class TripController extends Controller
     public function startTrip(StartTripRequest $request)
     {
         $scooter = $this->scooterService->getScooterByUuid($request->input('scooter_id'));
-        // dd($scooter);
         if ($scooter == null) {
             return $this->buildErrorResponse('Scooter does not exist', 403);
         }
@@ -56,6 +55,19 @@ class TripController extends Controller
 
     public function updateTrip(string $scooter_id)
     {
+        $scooter = $this->scooterService->getScooterByUuid($scooter_id);
+        if ($scooter == null) {
+            return $this->buildErrorResponse('Scooter does not exist', 403);
+        }
+
+        $scooterOnTrip = $this->tripService->isScooterOnTrip($scooter_id);
+        // dd($scooterOnTrip);
+        if ($scooterOnTrip == null) {
+            return $this->buildErrorResponse('This Scooter is not on a trip. Its location can not be updated', 403);
+        }
+        if ($scooterOnTrip->status == 0) {
+            return $this->buildErrorResponse('This trip has ended and cannot be updated', 403);
+        }
         return $this->tripService->updateTrip($scooter_id);
     }
 }

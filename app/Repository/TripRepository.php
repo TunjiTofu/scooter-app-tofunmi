@@ -79,12 +79,7 @@ class TripRepository implements TripRepositoryInterface
     public function updateTrip(string $scooter_id)
     {
         try {
-            $tripActive = $this->isTripActive($scooter_id);;
-            if (!$tripActive) {
-                return $this->buildErrorResponse("This trip has ended and cannot be updated", 403);
-            }
-
-            $trip = Trip::where('scooter_id', $scooter_id)->latest('id')->first();
+            $trip = Trip::where('scooter_uuid', $scooter_id)->latest('id')->first();
             $currLat = $trip['current_location']->getLat() + 0.11; //updating current Latitude by 0.11points every 11 seconds
             $currLng = $trip['current_location']->getLng() + 0.11; //updating current Longitude by 0.11points every 11 seconds
 
@@ -95,10 +90,17 @@ class TripRepository implements TripRepositoryInterface
             //Event
             TripUpdates::dispatch($scooter_id);
 
-            return $this->buildSuccessResponse("Location Update for Scooter " . $trip['scooter_id'], $trip, 200);
+            return $this->buildSuccessResponse("Location Update for Scooter " . $trip['scooter_id'], $updateTrip, 200);
         } catch (\Throwable $exception) {
             return $this->buildErrorResponse($exception->getMessage(), 403);
         }
+    }
+
+    public function isScooterOnTrip(string $scooter_id)
+    {
+        return Trip::where([
+            ['scooter_uuid', $scooter_id],
+        ])->first();
     }
 
     private function tripExist(int $tripId)
@@ -113,14 +115,6 @@ class TripRepository implements TripRepositoryInterface
         return Trip::where([
             ['id', $tripId],
             ['status', 0]
-        ])->exists();
-    }
-
-    private function isTripActive(int $scooter_id)
-    {
-        return Trip::where([
-            ['scooter_id', $scooter_id],
-            ['status', 1]
         ])->exists();
     }
 }
