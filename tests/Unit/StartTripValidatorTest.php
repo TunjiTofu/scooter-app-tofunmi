@@ -48,7 +48,7 @@ class StartTripValidatorTest extends TestCase
             'request_should_fail_when_no_client_id_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'scooter_id' => 'bb8dee5b-016e-43c9-bff6-9373e18321cf',
+                    'scooter_id' => '57be09f9-7ed5-425b-af2d-3b9c782b7323',
                     'startLatitude' => 12.32,
                     'startLongitude' => 13.34
                 ]
@@ -56,7 +56,7 @@ class StartTripValidatorTest extends TestCase
             'request_should_fail_when_no_start_latitude_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'scooter_id' => 'bb8dee5b-016e-43c9-bff6-9373e18321cf',
+                    'scooter_id' => '57be09f9-7ed5-425b-af2d-3b9c782b7323',
                     'client_id' => '4a47774e-3a88-4d5e-acc9-f8fd589b80d3',
                     'startLongitude' => 13.34
                 ]
@@ -64,7 +64,7 @@ class StartTripValidatorTest extends TestCase
             'request_should_fail_when_no_start_longitude_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'scooter_id' => 'bb8dee5b-016e-43c9-bff6-9373e18321cf',
+                    'scooter_id' => '57be09f9-7ed5-425b-af2d-3b9c782b7323',
                     'client_id' => '4a47774e-3a88-4d5e-acc9-f8fd589b80d3',
                     'startLatitude' => 13.34
                 ]
@@ -72,7 +72,7 @@ class StartTripValidatorTest extends TestCase
             'request_should_pass_when_all_data_is_provided' => [
                 'passed' => true,
                 'data' => [
-                    'scooter_id' => 'bb8dee5b-016e-43c9-bff6-9373e18321cf',
+                    'scooter_id' => '57be09f9-7ed5-425b-af2d-3b9c782b7323',
                     'client_id' => '4a47774e-3a88-4d5e-acc9-f8fd589b80d3',
                     'startLatitude' => 13.34,
                     'startLongitude' => 13.34
