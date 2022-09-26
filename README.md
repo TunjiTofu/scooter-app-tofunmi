@@ -33,16 +33,12 @@ $ cp .env.example .env
 ```
 $ ./vendor/bin/sail up -d
 ```
-- Generat am App Encryption Key
+- Generate an App Encryption Key
 ```
 $ ./vendor/bin/sail artisan key:generate
 ```
 - Open the directory with your desired code editor
 - Open the .env file and do the following
-    - Add API KEY 
-    ```
-    API_KEY= tofunmiScooter
-    ```
     - Update the following variables in the .env file
     ```
     B_CONNECTION=mysql
@@ -60,29 +56,6 @@ $ ./vendor/bin/sail artisan migrate
 - Run the following command to seed the database
 ```
 $ ./vendor/bin/sail artisan db:seed
-```
-
-## Project Directory Structure
-# Come back to THIS LATEREEEEEEE
-```
-- Project/
-    - data/
-        - downloads/
-        - import/
-    - src/
-        - Client/
-        - Config/
-        - Constants/
-        - Controller/
-        - DirectoryHandler/
-        - Reader/
-        - Service/
-        - Validator/
-    - tests/
-        - Unit/
-            - downloads/
-            - import/
-    - vendor/
 ```
 # Database Structure
 - Client Table (clients)
@@ -194,6 +167,7 @@ $ ./vendor/bin/sail artisan db:seed
 ## Further Improvements:
  - Reduce expensive calls to the database while updating the scooter location by utilizing Redis ✅
  - Implement a more proper child process ✅
+ - Improved test cases ✅
 
 ## API Documentation
 [Click this Link Access the API Documentation](https://app.gitbook.com/o/XXNaAkNtCMRanbfyrTQm/s/ItbDDRlpa0Wz2QwfIG8F/~/changes/gruTgx99ts0O1WV5Af8O/)

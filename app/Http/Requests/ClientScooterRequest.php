@@ -29,16 +29,4 @@ class ClientScooterRequest extends FormRequest
             'clientCurrentLng' => 'required|numeric|between:-180,180',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'radius.required' => 'Radius is Required',
-            'radius.numeric' => 'Radius must be Numeric',
-            'clientCurrentLat.required' => 'Client Current Latitude is Required',
-            'clientCurrentLat.numeric' => 'Client Latitude must be Numeric',
-            'clientCurrentLng.required' => 'Client Current Longitude is Required',
-            'clientCurrentLng.numeric' => 'Client Longitude must be Numeric',
-        ];
-    }
 }

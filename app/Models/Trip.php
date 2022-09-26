@@ -20,8 +20,8 @@ class Trip extends Model
 
     protected $fillable = [
         'uuid',
-        'scooter_id',
-        'client_id',
+        'scooter_uuid',
+        'client_uuid',
         'start_location',
         'current_location',
         'end_location',
@@ -33,11 +33,6 @@ class Trip extends Model
         'current_location' => LocationCast::class,
         'end_location' => LocationCast::class,
     ];
-
-    // public function newEloquentBuilder($query): SpatialBuilder
-    // {
-    //     return new SpatialBuilder($query);
-    // }
 
     public function scooter()
     {

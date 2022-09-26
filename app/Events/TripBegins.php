@@ -10,16 +10,18 @@ class TripBegins
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $scooter;
+    public $scooterId;
+    public $clientId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($scooter)
+    public function __construct($scooterId, $clientId)
     {
-        $this->scooter = $scooter;
+        $this->scooterId = $scooterId;
+        $this->clientId = $clientId;
     }
 
 }

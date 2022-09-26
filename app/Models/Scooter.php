@@ -10,10 +10,13 @@ use TarfinLabs\LaravelSpatial\Traits\HasSpatial;
 
 class Scooter extends Model
 {
-    
+
     use HasFactory;
     use HasUuids;
     use HasSpatial;
+
+    protected $primaryKey = 'uuid';
+    public $incrementing = false;
 
     protected $hidden = [
         'id'

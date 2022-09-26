@@ -20,12 +20,12 @@ class TripService implements TripServiceInterface
         return $this->trip->startTrip($request);
     }
 
-    public function stopTrip(StopTripRequest $request)
+    public function stopTrip(StopTripRequest $request) 
     {
        return $this->trip->stopTrip($request);
     }
 
-    public function updateTrip(int $scooter_id)
+    public function updateTrip(string $scooter_id)
     {
        return $this->trip->updateTrip($scooter_id);
     }

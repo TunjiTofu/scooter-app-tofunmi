@@ -24,14 +24,7 @@ class StopTripRequest extends FormRequest
     public function rules()
     {
         return [
-            'scooter_id' => 'required|numeric',
-        ];
-    }
-
-    public function messages()
-    {
-        return[
-            'scooter_id.required' => 'Scooter ID is Required',
+            'scooter_id' => 'required|string|max:36',
         ];
     }
 }

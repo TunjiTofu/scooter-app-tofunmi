@@ -8,6 +8,7 @@ use App\Events\TripEnds;
 use App\Events\TripUpdates;
 use App\Http\Requests\StartTripRequest;
 use App\Http\Requests\StopTripRequest;
+use App\Models\Client;
 use App\Models\Scooter;
 use App\Models\Trip;
 use App\Traits\ResponseAPI;
@@ -27,31 +28,17 @@ class TripRepository implements TripRepositoryInterface
     public function startTrip(StartTripRequest $request)
     {
         try {
-            $isScooterBusy = $this->isScooterBusy($request->scooter_id);
-            if ($isScooterBusy) {
-                $message = "Scooter " . $request->scooter_id . " is busy";
-                return $this->buildErrorResponse($message, 403);
-            }
-
-            $isClientBusy = $this->isClientBusy($request->client_id);
-            if ($isClientBusy) {
-                $message = "This Client with ID " . $request->client_id . " is on a trip";
-                return $this->buildErrorResponse($message, 403);
-            }
-
             $query = $this->trip->query()->create([
-                'uuid' => Uuid::uuid4()->toString(),
-                'scooter_id' => $request->scooter_id,
-                'client_id' => $request->client_id,
+                'scooter_uuid' => $request->scooter_id,
+                'client_uuid' => $request->client_id,
                 'start_location' => new Point(lat: $request->startLatitude, lng: $request->startLongitude),
                 'current_location' => new Point(lat: $request->startLatitude, lng: $request->startLongitude),
                 'end_location' => new Point(lat: 0, lng: 0),
                 'status' => 1,
-
             ]);
 
             //Event
-            TripBegins::dispatch($request->scooter_id);
+           TripBegins::dispatch($request->scooter_id, $request->client_id);
 
             return $this->buildSuccessResponse("Trip Started", $query, 200);
         } catch (\Throwable $exception) {
@@ -71,7 +58,7 @@ class TripRepository implements TripRepositoryInterface
             $tripEnded = $this->tripEnded($request->trip_id);
             if ($tripEnded) {
                 $message = "This Trip Has Ended and It is Inactive";
-                return $this->buildErrorResponse($message, 403); 
+                return $this->buildErrorResponse($message, 403);
             }
 
             $trip = Trip::find($request->trip_id);
@@ -89,7 +76,7 @@ class TripRepository implements TripRepositoryInterface
         }
     }
 
-    public function updateTrip(int $scooter_id)
+    public function updateTrip(string $scooter_id)
     {
         try {
             $tripActive = $this->isTripActive($scooter_id);;
@@ -112,22 +99,6 @@ class TripRepository implements TripRepositoryInterface
         } catch (\Throwable $exception) {
             return $this->buildErrorResponse($exception->getMessage(), 403);
         }
-    }
-
-    private function isScooterBusy(int $scooterId)
-    {
-        return Scooter::where([
-            ['id', $scooterId],
-            ['status', 1]
-        ])->exists();
-    }
-
-    private function isClientBusy(int $clientId)
-    {
-        return Trip::where([
-            ['client_id', $clientId],
-            ['status', 1]
-        ])->exists();
     }
 
     private function tripExist(int $tripId)

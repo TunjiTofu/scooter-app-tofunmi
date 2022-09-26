@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
-class b_UpdatetTripTest extends TestCase
+class b_UpdateTripTest extends TestCase
 {
     private const ENDPOINT = 'http://localhost/api/v1/trip/update/1';
 
@@ -19,6 +19,7 @@ class b_UpdatetTripTest extends TestCase
         );
 
         $response->assertStatus(200);
+        // $response->assertJson(200);
     }
 
     private function buildRequestHeaders(): array

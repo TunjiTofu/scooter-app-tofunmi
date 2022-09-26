@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid')->index();
-            $table->foreignId('scooter_id')->nullable(false);
-            $table->foreignId('client_id')->nullable(false);
+            $table->uuid('scooter_uuid')->nullable(false);
+            $table->uuid('client_uuid')->nullable(false);
             $table->point('start_location');
             $table->point('current_location')->nullable();
             $table->point('end_location')->nullable();
             $table->integer('status')->default(0);
-            $table->foreign('scooter_id')->references('id')->on('scooters')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('scooter_uuid')->references('uuid')->on('scooters')->onDelete('cascade');
+            $table->foreign('client_uuid')->references('uuid')->on('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }
