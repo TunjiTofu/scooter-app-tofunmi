@@ -10,15 +10,21 @@ class TripEnds
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $scooter; 
+    public $scooterId; 
+    public $clientId; 
+    public $endLatitude;
+    public $endLongitude;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($scooter)
+    public function __construct($clientId, $scooterId, $endLatitude, $endLongitude)
     {
-        $this->scooter = $scooter;
+        $this->clientId = $clientId;
+        $this->scooterId = $scooterId;
+        $this->endLatitude = $endLatitude;
+        $this->endLongitude = $endLongitude;
     }
 
 }

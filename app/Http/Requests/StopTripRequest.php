@@ -24,7 +24,7 @@ class StopTripRequest extends FormRequest
     public function rules()
     {
         return [
-            'trip_id' => 'required|numeric',
+            'client_id' => 'required|string|max:36',
             'scooter_id' => 'required|string|max:36',
             'endLatitude' => 'required|numeric|between:-90,90',
             'endLongitude' => 'required|numeric|between:-180,180',

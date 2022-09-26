@@ -2,10 +2,9 @@
 
 namespace App\Listeners;
 
+use App\Models\Client;
 use App\Models\Scooter;
-use App\Models\Trip;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use TarfinLabs\LaravelSpatial\Types\Point;
 
 class NotifyTripEnd
 {
@@ -27,8 +26,13 @@ class NotifyTripEnd
      */
     public function handle($event)
     {
-        $sc = Scooter::find($event->scooter);
+        $sc = Scooter::find($event->scooterId);
         $sc->status = 0;
+        $sc->location = new Point(lat: $event->endLatitude, lng: $event->endLongitude);
         $sc->save();
+
+        $client = Client::find($event->clientId);
+        $client->status = 0;
+        $client->save();
     }
 }

@@ -29,11 +29,5 @@ class TripService implements TripServiceInterface
     {
        return $this->trip->updateTrip($scooter_id);
     }
-
-    public function isScooterOnTrip(string $scooter_id)
-    {
-        return $this->trip->isScooterOnTrip($scooter_id);
-    }
-
 }
 ?>
