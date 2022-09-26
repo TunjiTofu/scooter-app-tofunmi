@@ -18,5 +18,10 @@ class ScooterService implements ScooterServiceInterface
        return $this->scooter->locateScooter($request);
     } 
 
+    public function getScooterByUuid(string $scooterId)
+    {
+       return $this->scooter->getScooterByUuid($scooterId);
+    }
+
 }
-?>
+?> 

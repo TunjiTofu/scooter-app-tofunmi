@@ -10,12 +10,6 @@ use TarfinLabs\LaravelSpatial\Types\Point;
 class ScooterRepository implements ScooterRepositoryInterface
 {
     use ResponseAPI;
-    protected $trip;
-
-    public function __construct(Scooter $trip)
-    {
-        $this->trip = $trip;
-    }
     
     public function locateScooter(ClientScooterRequest $request)
     {
@@ -30,6 +24,13 @@ class ScooterRepository implements ScooterRepositoryInterface
             return $this->buildErrorResponse($exception->getMessage(), 403);
         }
     }
+
+    public function getScooterByUuid(string $scooterId)
+    {
+        return Scooter::query()
+        ->where('uuid', $scooterId)
+        ->first();
+    }
 }
 
-?>
+?> 
