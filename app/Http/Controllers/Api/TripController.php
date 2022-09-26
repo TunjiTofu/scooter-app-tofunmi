@@ -35,7 +35,7 @@ class TripController extends Controller
         if ($scooter->status == 1) {
             return $this->buildErrorResponse('This Scooter is currently busy', 403);
         }
-       
+
         $client = $this->clientService->getClientByUuid($request->input('client_id'));
         if ($client == null) {
             return $this->buildErrorResponse('Client does not exist', 403);
@@ -44,13 +44,13 @@ class TripController extends Controller
         if ($client->status == 1) {
             return $this->buildErrorResponse('This Client is already on a trip', 403);
         }
-       
+
         return $this->tripService->startTrip($request);
     }
 
     public function endTrip(StopTripRequest $request)
     {
-        return $this->tripService->stopTrip($request); 
+        return $this->tripService->stopTrip($request);
     }
 
     public function updateTrip(string $scooter_id)
@@ -61,7 +61,6 @@ class TripController extends Controller
         }
 
         $scooterOnTrip = $this->tripService->isScooterOnTrip($scooter_id);
-        // dd($scooterOnTrip);
         if ($scooterOnTrip == null) {
             return $this->buildErrorResponse('This Scooter is not on a trip. Its location can not be updated', 403);
         }
